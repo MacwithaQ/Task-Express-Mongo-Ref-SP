@@ -3,6 +3,7 @@ const cors = require("cors");
 const connectDb = require("./database");
 const productsRouter = require("./api/products/routes");
 const shopsRouter = require("./api/shops/routes");
+const usersRouter = require("./api/users/routes");
 
 const app = express();
 connectDb();
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 // Routes
 app.use("/api/products", productsRouter);
 app.use("/api/shops", shopsRouter);
+app.use("/api/users", usersRouter);
 
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
