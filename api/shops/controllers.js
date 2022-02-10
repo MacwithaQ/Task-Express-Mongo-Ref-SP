@@ -12,7 +12,7 @@ exports.fetchShop = async (shopId, next) => {
 
 exports.getShops = async (req, res) => {
   try {
-    const shops = await Shop.find().populate("products");
+    const shops = await Shop.find().populate("products", "name");
     return res.json(shops);
   } catch (error) {
     return res.status(500).json({ message: error.message });
