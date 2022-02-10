@@ -9,9 +9,9 @@ const {
 } = require("./controllers");
 const upload = require("../../middleware/multer");
 
-const router = express.Router();
+const productsRouter = express.Router();
 
-router.param("productId", async (req, res, next, productId) => {
+productsRouter.param("productId", async (req, res, next, productId) => {
   const product = await fetchProduct(productId, next);
   if (product) {
     req.product = product;
@@ -23,9 +23,9 @@ router.param("productId", async (req, res, next, productId) => {
   }
 });
 
-router.get("/", getProducts);
-router.post("/", upload.single("image"), productCreate);
-router.delete("/:productId", productDelete);
-router.put("/:productId", upload.single("image"), productUpdate);
+productsRouter.get("/", getProducts);
+productsRouter.post("/", upload.single("image"), productCreate);
+productsRouter.delete("/:productId", productDelete);
+productsRouter.put("/:productId", upload.single("image"), productUpdate);
 
-module.exports = router;
+module.exports = productsRouter;
