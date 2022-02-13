@@ -11,6 +11,7 @@ const ProductSchema = new mongoose.Schema(
     },
     image: String,
     quantity: Number,
+    // Establishing a one to many relationship
     shop: { type: mongoose.Schema.Types.ObjectId, ref: "Shop" },
   },
   { timestamps: true }
