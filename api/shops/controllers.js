@@ -21,6 +21,7 @@ exports.getShops = async (req, res) => {
 
 exports.shopCreate = async (req, res) => {
   try {
+    req.body.owner = req.user._id;
     if (req.file) {
       req.body.image = `/${req.file.path}`;
       req.body.image = req.body.image.replace("\\", "/");

@@ -1,5 +1,5 @@
 const express = require("express");
-
+const passport = require("passport");
 const {
   getShops,
   shopCreate,
@@ -24,7 +24,12 @@ shopsRouter.param("shopId", async (req, res, next, shopId) => {
 });
 
 shopsRouter.get("/", getShops);
-shopsRouter.post("/", upload.single("image"), shopCreate);
+shopsRouter.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  shopCreate
+);
 shopsRouter.post("/:shopId/products", upload.single("image"), productCreate);
 
 module.exports = shopsRouter;

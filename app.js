@@ -10,7 +10,7 @@ const connectDb = require("./database");
 const passport = require("passport");
 
 // Allows us to use the local strategy as middleware for validation
-const { localStrategy } = require("./middleware/passport");
+const { localStrategy, jwtStrategy } = require("./middleware/passport");
 
 // Importing routers
 const productsRouter = require("./api/products/routes");
@@ -25,6 +25,7 @@ app.use(cors());
 app.use(express.json());
 app.use(passport.initialize());
 passport.use(localStrategy);
+passport.use(jwtStrategy);
 
 // Console logs the requests being pushed to the backend
 app.use((req, res, next) => {

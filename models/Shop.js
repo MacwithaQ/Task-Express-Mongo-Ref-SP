@@ -7,7 +7,9 @@ const ShopSchema = new mongoose.Schema(
   {
     name: String,
     image: String,
+    // Establishing a one to many relationship
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   { timestamps: true }
 );

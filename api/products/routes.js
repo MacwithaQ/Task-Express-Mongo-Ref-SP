@@ -24,6 +24,7 @@ productsRouter.param("productId", async (req, res, next, productId) => {
 });
 
 productsRouter.get("/", getProducts);
+productsRouter.post("/", upload.single("image"), productCreate);
 productsRouter.delete("/:productId", productDelete);
 productsRouter.put("/:productId", upload.single("image"), productUpdate);
 
