@@ -30,6 +30,11 @@ shopsRouter.post(
   upload.single("image"),
   shopCreate
 );
-shopsRouter.post("/:shopId/products", upload.single("image"), productCreate);
+shopsRouter.post(
+  "/:shopId/products",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  productCreate
+);
 
 module.exports = shopsRouter;
