@@ -1,4 +1,6 @@
 const Product = require("../../models/Product");
+const User = require("../../models/User");
+const Shop = require("../../models/Shop");
 
 exports.fetchProduct = async (productId, next) => {
   try {
@@ -18,23 +20,15 @@ exports.getProducts = async (req, res) => {
   }
 };
 
-exports.productCreate = async (req, res, next) => {
-  try {
-    if (req.file) {
-      req.body.image = `${req.protocol}://${req.get("host")}/${req.file.path}`;
-    }
-    const newProduct = await Product.create(req.body);
-    return res.status(201).json(newProduct);
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.productDelete = async (req, res, next) => {
-  try {
-    await req.product.remove();
-    res.status(204).end();
-  } catch (err) {
+  if (req.user.user === Shop.owner) {
+    try {
+      await req.product.remove();
+      res.status(204).end();
+    } catch (err) {
+      next(error);
+    }
+  } else {
     next(error);
   }
 };

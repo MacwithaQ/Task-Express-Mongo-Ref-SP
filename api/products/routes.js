@@ -1,4 +1,5 @@
 const express = require("express");
+const passport = require("passport");
 
 const {
   getProducts,
@@ -23,7 +24,16 @@ productsRouter.param("productId", async (req, res, next, productId) => {
 });
 
 productsRouter.get("/", getProducts);
-productsRouter.delete("/:productId", productDelete);
-productsRouter.put("/:productId", upload.single("image"), productUpdate);
+productsRouter.delete(
+  "/:productId",
+  passport.authenticate("jwt", { session: false }),
+  productDelete
+);
+productsRouter.put(
+  "/:productId",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("image"),
+  productUpdate
+);
 
 module.exports = productsRouter;

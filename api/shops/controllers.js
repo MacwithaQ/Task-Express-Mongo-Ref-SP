@@ -1,5 +1,6 @@
 const Shop = require("../../models/Shop");
 const Product = require("../../models/Product");
+const { findById } = require("../../models/Product");
 
 exports.fetchShop = async (shopId, next) => {
   try {
@@ -33,19 +34,25 @@ exports.shopCreate = async (req, res) => {
   }
 };
 
-exports.productCreate = async (req, res) => {
+exports.productCreate = async (req, res, next) => {
   try {
     if (req.file) {
       req.body.image = `/${req.file.path}`;
       req.body.image = req.body.image.replace("\\", "/");
     }
     const { shopId } = req.params;
-    req.body.shop = shopId;
-    const newProduct = await Product.create(req.body);
-    await Shop.findByIdAndUpdate(shopId, {
-      $push: { products: newProduct._id },
-    });
-    return res.status(201).json(newProduct);
+    const foundShop = await Shop.findById(shopId);
+    console.log(foundShop.owner);
+    if (String(req.user._id) === String(foundShop.owner)) {
+      req.body.shop = shopId;
+      const newProduct = await Product.create(req.body);
+      await Shop.findByIdAndUpdate(shopId, {
+        $push: { products: newProduct._id },
+      });
+      return res.status(201).json(newProduct);
+    } else {
+      res.status(500).json({ msg: "Unauthorized" });
+    }
   } catch (error) {
     next(error);
   }
