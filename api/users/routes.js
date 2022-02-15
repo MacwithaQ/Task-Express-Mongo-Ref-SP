@@ -5,7 +5,7 @@ const passport = require("passport");
 const usersRouter = express.Router();
 
 usersRouter.get("/", fetchUsers);
-usersRouter.post("/", signUp);
+usersRouter.post("/signup", signUp);
 usersRouter.post(
   "/signin",
   passport.authenticate("local", { session: false }),

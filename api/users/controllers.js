@@ -35,12 +35,17 @@ exports.signUp = async (req, res, next) => {
 };
 
 exports.signIn = (req, res, next) => {
-  const user = req.user;
-  const payload = {
-    _id: user._id,
-    user: user.user,
-    exp: Date.now() + JWT_EXPIRATION_MS,
-  };
-  const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
-  res.status(201).json({ token });
+  try {
+    const user = req.user;
+    const payload = {
+      _id: user._id,
+      user: user.user,
+      exp: Date.now() + JWT_EXPIRATION_MS,
+    };
+    const token = jwt.sign(JSON.stringify(payload), JWT_SECRET);
+    console.log(token);
+    res.status(201).json({ token });
+  } catch (error) {
+    next(error);
+  }
 };
