@@ -16,6 +16,7 @@ const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const productsRouter = require("./api/products/routes");
 const shopsRouter = require("./api/shops/routes");
 const usersRouter = require("./api/users/routes");
+const path = require("path");
 // --------------------------------------------------------
 
 // Initialize app, define packages and middlewares used
@@ -35,6 +36,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/media", express.static(path.join(__dirname, "media")));
 // Routes
 app.use("/api/products", productsRouter);
 app.use("/api/shops", shopsRouter);

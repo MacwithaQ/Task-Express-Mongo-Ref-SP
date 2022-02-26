@@ -1,6 +1,6 @@
 const Product = require("../../models/Product");
 const User = require("../../models/User");
-const Shop = require("../../models/Shop");
+const Shop = require("../../models/Shop")
 
 exports.fetchProduct = async (productId, next) => {
   try {
@@ -21,14 +21,10 @@ exports.getProducts = async (req, res) => {
 };
 
 exports.productDelete = async (req, res, next) => {
-  if (req.user.user === Shop.owner) {
-    try {
-      await req.product.remove();
-      res.status(204).end();
-    } catch (err) {
-      next(error);
-    }
-  } else {
+  try {
+    await req.product.remove();
+    res.status(204).end();
+  } catch (err) {
     next(error);
   }
 };

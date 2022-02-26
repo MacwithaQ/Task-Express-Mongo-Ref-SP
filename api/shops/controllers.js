@@ -13,7 +13,7 @@ exports.fetchShop = async (shopId, next) => {
 
 exports.getShops = async (req, res) => {
   try {
-    const shops = await Shop.find().populate("products", "name");
+    const shops = await Shop.find().populate("products", "name image");
     return res.json(shops);
   } catch (error) {
     return res.status(500).json({ message: error.message });

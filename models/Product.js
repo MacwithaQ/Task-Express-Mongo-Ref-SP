@@ -3,13 +3,14 @@ const mongooseSlugPlugin = require("mongoose-slug-plugin");
 const ProductSchema = new mongoose.Schema(
   {
     name: String,
+    image: String,
     description: String,
     price: {
       type: Number,
       default: 5,
       min: 1,
     },
-    image: String,
+    //image: String,
     quantity: Number,
     // Establishing a one to many relationship
     shop: { type: mongoose.Schema.Types.ObjectId, ref: "Shop" },
