@@ -16,6 +16,7 @@ const { localStrategy, jwtStrategy } = require("./middleware/passport");
 const productsRouter = require("./api/products/routes");
 const shopsRouter = require("./api/shops/routes");
 const usersRouter = require("./api/users/routes");
+const ordersRouter = require("./api/orders/routes");
 const path = require("path");
 // --------------------------------------------------------
 
@@ -41,6 +42,7 @@ app.use("/media", express.static(path.join(__dirname, "media")));
 app.use("/api/products", productsRouter);
 app.use("/api/shops", shopsRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/orders", ordersRouter);
 
 // Error handler
 app.use((err, req, res, next) => {
